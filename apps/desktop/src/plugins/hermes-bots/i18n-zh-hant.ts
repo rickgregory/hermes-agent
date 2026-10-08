@@ -3,6 +3,7 @@
 
 import type { BotsMessages } from './i18n'
 import { rolesZhHant } from './role-templates'
+import { roomZhHant, teamZhHant } from './team-i18n'
 
 export const zhHant: BotsMessages = {
   editor: {
@@ -224,7 +225,6 @@ export const zhHant: BotsMessages = {
     disbandTitle: '解散群組聊天？',
     deleteTitle: '刪除群組聊天？',
     deleteAction: '刪除',
-    composerPlaceholder: '說點什麼 — 這個群組裡的每個機器人都會聽到。',
     slashCommandsUnsupported: '群組聊天不支援斜線命令。請開啟個別機器人的聊天來使用。',
     attachHint: '附加檔案 — 每個回應的機器人都能看到',
     newThread: '新討論串',
@@ -426,5 +426,7 @@ export const zhHant: BotsMessages = {
     runsRaw: '原始排程 — every Nm/Nh/Nd 或 5 段 cron',
     timesTotal: count => `，共 ${count} 次`
   },
-  roles: rolesZhHant
+  roles: rolesZhHant,
+  team: teamZhHant,
+  room: roomZhHant
 }

@@ -9,7 +9,8 @@
 
 import { atom } from '@hermes/plugin-sdk'
 
-import { $groupChats, groupSpeakerLabel } from './group-chat'
+import { $groupChats, GROUP_CHAT_MAX_MESSAGES, GROUP_CHAT_MAX_ROUNDS, groupSpeakerLabel } from './group-chat'
+import { botsText } from './i18n'
 import type { GroupActivityEvent, GroupActivityKind } from './types'
 
 // ── group activity feed ─────────────────────────────────────────────────────
@@ -142,7 +143,15 @@ export function groupActivityLabel(event: GroupActivityEntry, group?: null | str
   const kind = event?.kind
   const base = GROUP_ACTIVITY_LABELS[kind] || kind || 'did something'
 
-  if (kind === 'cancelled' || kind === 'settled' || kind === 'capped') {
+  if (kind === 'settled') {
+    return botsText().room.settled
+  }
+
+  if (kind === 'capped') {
+    return botsText().room.capped(GROUP_CHAT_MAX_ROUNDS, GROUP_CHAT_MAX_MESSAGES)
+  }
+
+  if (kind === 'cancelled') {
     return base
   }
 

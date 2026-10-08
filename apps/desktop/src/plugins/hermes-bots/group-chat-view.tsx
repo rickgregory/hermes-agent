@@ -101,6 +101,7 @@ import {
 } from './group-panes'
 import type { GroupComposerDraft, GroupDraftSetter } from './group-panes'
 import { groupReplyMentionTag, sendToGroupChat, stopGroupThread } from './group-rounds'
+import { GroupRulesCard } from './group-rules'
 import { clearGroupClarify, renameGroupClarify } from './group-turns'
 import { botsText, useBots } from './i18n'
 import { displayName, slugifyProfileName } from './labels'
@@ -1471,13 +1472,7 @@ export function GroupChatWorkspace({ group, members, onBack, visible = true }: G
         {/* unbreakable code line widened every entry to its own width and the */}
         {/* log scrolled sideways as a whole instead of the code block (#91878). */}
         <div className="grid grid-cols-[minmax(0,1fr)] gap-1.5 px-2.5 pb-2">
-          {room.log.length
-            ? logChildren
-            : [
-                <div className="px-2 py-4 text-center text-xs text-(--ui-text-tertiary)" key={'empty'}>
-                  {b.group.composerPlaceholder}
-                </div>
-              ]}
+          {room.log.length ? logChildren : [<GroupRulesCard key={'empty'} />]}
           {roomClarifies.map(entry => (
             <GroupClarifyCard
               entry={entry}

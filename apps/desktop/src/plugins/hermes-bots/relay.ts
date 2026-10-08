@@ -12,6 +12,7 @@ import { host, LruCache } from '@hermes/plugin-sdk'
 import { botHandle, clearBotAttention, noteBotAttention } from './data'
 import { RELAY_DELIVER_TIMEOUT_MS } from './relay-budget'
 import { ID } from './shared'
+import { type BotMessage, noteBotMessage } from './team-map-data'
 import type { ProfileRoute, RosterRow } from './types'
 
 // ── cross-connection bot relay ────────────────────────────────────────────
@@ -617,6 +618,25 @@ function enqueueRelayDelivery(sender: RelayConnection, envelope: RelayEnvelope, 
   })
 }
 
+/** Feed the team map: each relay delivery is one bot-to-bot message. */
+function noteRelayMessage(senderId: string, envelope: RelayEnvelope, targetId: string, status: BotMessage['status']) {
+  const fromName = String(envelope?.from_profile || '')
+
+  noteBotMessage({
+    at: Date.now(),
+    from: {
+      connectionId: senderId,
+      handle: String(envelope?.from_handle || fromName),
+      ...(fromName ? { name: fromName } : {})
+    },
+    preview: String(envelope?.message || '')
+      .replace(/^Message from [^:]*:\s*/i, '')
+      .slice(0, 200),
+    status,
+    to: { connectionId: targetId, name: String(envelope?.target_profile || '') }
+  })
+}
+
 /** Deliver one claimed envelope on the target connection's own socket and post
  *  the reply (or the error) back to the sender gateway for its waiter. */
 async function deliverRelayEnvelope(
@@ -669,6 +689,7 @@ async function deliverRelayEnvelope(
     )
 
     clearBotAttention(attentionKey)
+    noteRelayMessage(sender.id, envelope, target.id, 'delivered')
     await postReply({
       reply: String(res?.reply || '')
     })
@@ -680,6 +701,7 @@ async function deliverRelayEnvelope(
     // classified codes beat free-text re-parsing.
     const reason = String(error?.data?.reason || '').trim()
     noteBotAttention(attentionKey, reason || error?.message || error)
+    noteRelayMessage(sender.id, envelope, target.id, 'failed')
     await postReply({
       error: String(error?.message || error || 'delivery failed'),
       ...(reason

@@ -16,6 +16,7 @@ import type { useBots } from './i18n'
 import { setActivityToasts } from './roster-actions'
 import { GatewayKindGlyph } from './roster-sections'
 import type { rosterGatewayOptions } from './roster-sections'
+import { TeamMapButton } from './team-map'
 import type { RosterActivityFilter, RosterKindFilter, RosterRow } from './types'
 
 interface renderRosterToolbarProps {
@@ -74,6 +75,7 @@ export function renderRosterToolbar({
           Bots
         </span>
         <div className="flex items-center gap-0.5">
+          <TeamMapButton roster={roster} />
           <Tip
             label={activityToasts ? 'Activity toasts on — click to silence' : 'Activity toasts off — click to enable'}
           >

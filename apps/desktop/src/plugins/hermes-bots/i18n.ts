@@ -35,6 +35,16 @@ import { useMemo } from 'react'
 import { zhHant } from './i18n-zh-hant'
 import { type RoleMessages, rolesEn, rolesJa, rolesZh } from './role-templates'
 import { getPluginCtx } from './shared'
+import {
+  roomEn,
+  roomJa,
+  type RoomMessages,
+  roomZh,
+  teamEn,
+  teamJa,
+  type TeamMessages,
+  teamZh
+} from './team-i18n'
 
 export type BotsMessages = {
   /** Left rail: the bot + group-chat roster. */
@@ -271,7 +281,6 @@ export type BotsMessages = {
     disbandTitle: string
     deleteTitle: string
     deleteAction: string
-    composerPlaceholder: string
     slashCommandsUnsupported: string
     attachHint: string
     newThread: string
@@ -485,6 +494,9 @@ export type BotsMessages = {
   }
   /** New Bot starting roles (copy lives in role-templates.ts). */
   roles: RoleMessages
+  /** Team map + group-chat rules (copy lives in team-i18n.ts). */
+  team: TeamMessages
+  room: RoomMessages
 }
 
 const en: BotsMessages = {
@@ -717,7 +729,6 @@ const en: BotsMessages = {
     disbandTitle: 'Disband group chat?',
     deleteTitle: 'Delete group chat?',
     deleteAction: 'Delete',
-    composerPlaceholder: 'Say something — every bot in this group hears the room.',
     slashCommandsUnsupported:
       'Slash commands are not supported in group chats. Open an individual bot chat to use them.',
     attachHint: 'Attach files — every responding bot sees them',
@@ -921,7 +932,9 @@ const en: BotsMessages = {
     runsRaw: 'Raw schedule — every Nm/Nh/Nd or 5-field cron',
     timesTotal: count => `, ${count} time(s) total`
   },
-  roles: rolesEn
+  roles: rolesEn,
+  team: teamEn,
+  room: roomEn
 }
 
 const ja: BotsMessages = {
@@ -1155,7 +1168,6 @@ const ja: BotsMessages = {
     disbandTitle: 'グループチャットを解散しますか？',
     deleteTitle: 'グループチャットを削除しますか？',
     deleteAction: '削除',
-    composerPlaceholder: '何か書いてください — このグループのすべてのボットが部屋の内容を受け取ります。',
     slashCommandsUnsupported:
       'グループチャットではスラッシュコマンドを使用できません。個別のボットチャットを開いて使用してください。',
     attachHint: 'ファイルを添付 — 応答するすべてのボットが見ます',
@@ -1362,7 +1374,9 @@ const ja: BotsMessages = {
     runsRaw: '生のスケジュール — Nm/Nh/Nd または5フィールドのcron',
     timesTotal: count => `、合計${count}回`
   },
-  roles: rolesJa
+  roles: rolesJa,
+  team: teamJa,
+  room: roomJa
 }
 
 const zh: BotsMessages = {
@@ -1585,7 +1599,6 @@ const zh: BotsMessages = {
     disbandTitle: '解散群聊？',
     deleteTitle: '删除群聊？',
     deleteAction: '删除',
-    composerPlaceholder: '说点什么 — 这个群里的每个机器人都会听到。',
     slashCommandsUnsupported: '群聊不支持斜杠命令。请打开单个机器人的聊天来使用。',
     attachHint: '附加文件 — 每个回应的机器人都能看到',
     newThread: '新帖子',
@@ -1787,7 +1800,9 @@ const zh: BotsMessages = {
     runsRaw: '原始计划 — every Nm/Nh/Nd 或 5 段 cron',
     timesTotal: count => `，共 ${count} 次`
   },
-  roles: rolesZh
+  roles: rolesZh,
+  team: teamZh,
+  room: roomZh
 }
 
 /** Registered via `ctx.i18n.register` at plugin load (disposer tracked). */
