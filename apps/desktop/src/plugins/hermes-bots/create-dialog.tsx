@@ -41,9 +41,9 @@ import { useEffect, useRef, useState } from 'react'
 
 import { avatarColor, blobatarSvg, botAppearance, BotFace } from './avatar'
 import { isBackfilledFacePng } from './avatar-image'
-import { AvatarPicker } from './avatar-picker'
 import { $selectedBot } from './bot-state'
 import { createCanonicalChat } from './canonical-chat'
+import { AppearanceSection, BotRoleFields } from './create-dialog-parts'
 import { $botMeta, botHandle, botRosterKey, filterBots, ROSTER_KEY, saveBotMeta } from './data'
 import { labeled, ResizableFrame } from './dialog-parts'
 import { GROUP_CHAT_MAX_MEMBERS, mintGroupRoomId, uniqueGroupChatName, updateGroupChat } from './group-chat'
@@ -626,27 +626,16 @@ export function CreateAgentDialog({ open, onClose, onConfigureModel, roster }: C
           <DialogDescription>{b.editor.newDescription}</DialogDescription>
         </DialogHeader>
         <div className="grid gap-3.5">
-          <div className="flex justify-center py-1">
-            <BotFace
-              color={avatarColor(color, slug || 'agent')}
-              image={image}
-              name={slug || 'agent'}
-              shape={shape}
-              size={56}
-            />
-          </div>
-          <AvatarPicker
+          <AppearanceSection
             color={color}
-            generateSeed={{
-              name: slug || 'agent',
-              title,
-              description
-            }}
+            description={description}
             image={image}
             onColor={setColor}
             onImage={setImage}
             onShape={setShape}
             shape={shape}
+            slug={slug}
+            title={title}
           />
           {labeled(
             b.editor.name,
@@ -694,19 +683,14 @@ export function CreateAgentDialog({ open, onClose, onConfigureModel, roster }: C
           {remoteTarget ? (
             <div className="text-[0.7rem] leading-5 text-(--ui-text-tertiary)">{b.editor.remoteHint(targetLabel)}</div>
           ) : null}
-          {labeled(
-            b.editor.title,
-            <Input onChange={event => setTitle(event.target.value)} placeholder="Inbox Triage" value={title} />
-          )}
-          {labeled(
-            b.editor.description,
-            <Textarea
-              className="min-h-16"
-              onChange={event => setDescription(event.target.value)}
-              placeholder={b.bot.helpPromptPlaceholder}
-              value={description}
-            />
-          )}
+          <BotRoleFields
+            fields={{ name, title, description }}
+            onChange={next => {
+              setName(next.name)
+              setTitle(next.title)
+              setDescription(next.description)
+            }}
+          />
           <Button
             className="flex items-center gap-1 text-xs font-medium text-(--ui-text-tertiary) hover:text-(--ui-text-secondary)"
             onClick={() => {
