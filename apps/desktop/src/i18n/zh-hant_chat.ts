@@ -223,7 +223,7 @@ export const zhHantChat = {
   statusStack: {
     hideStack: '隱藏狀態面板',
     showStack: '顯示狀態面板',
-    agents: '代理',
+    agents: '助手',
     background: count => `${count} 個背景任務`,
     goalActive: '目標進行中',
     goalBlocked: '目標受阻',

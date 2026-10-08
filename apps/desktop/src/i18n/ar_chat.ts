@@ -201,7 +201,7 @@ export const arChat = {
   statusStack: {
     hideStack: 'إخفاء لوحة الحالة',
     showStack: 'إظهار لوحة الحالة',
-    agents: 'الوكلاء',
+    agents: 'المساعدون',
     background: count => `${count} في الخلفية`,
     goalActive: 'الهدف نشط',
     goalBlocked: 'الهدف متعذر',

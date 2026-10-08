@@ -48,8 +48,8 @@ export const arCapabilities = {
     transcriptTruncated: 'عرض أحدث 16 KiB',
     transcriptUnavailable: 'السجل المباشر غير متاح',
 
-    close: 'إغلاق الوكلاء',
-    title: 'شجرة التوليد',
+    close: 'إغلاق المساعدين',
+    title: 'المساعدون',
     subtitle: 'نشاط الوكلاء الفرعيين المباشر للدور الحالي.',
     emptyTitle: 'لا يوجد وكلاء فرعيون مباشرون',
     emptyDesc: 'عندما يفوّض دور ما عملا، يبث الوكلاء الأبناء تقدّمهم هنا.',

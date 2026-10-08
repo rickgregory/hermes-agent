@@ -256,7 +256,7 @@ export function CreateAgentDialog({ open, onClose, onConfigureModel, roster }: C
       .then(() =>
         host.notify({
           kind: 'success',
-          message: `Draft agent "${draft}" discarded`
+          message: `Draft bot "${draft}" discarded`
         })
       )
       .catch(err => host.notifyError(err, `Could not clean up draft profile "${draft}"`))
